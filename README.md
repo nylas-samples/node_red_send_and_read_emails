@@ -22,7 +22,17 @@ Open the editor on your favourite web browser
 http://127.0.0.1:1880/
 ```
 
-Import Send_Email.json or Read_Emails.json
+Import 
+
+```
+Send_Email.json
+```
+
+or 
+
+```
+Read_Emails.json
+```
 
 Get all the information on the blog post:
 
