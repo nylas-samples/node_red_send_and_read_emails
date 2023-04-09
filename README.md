@@ -1,45 +1,29 @@
-# code-sample-description
-This sample repo will show you how to easily do X with Nylas.
+# node_red_send_and_read_emails
+
+This sample repo will show send and read emails using Node-Red.
 
 ## Setup
 
-### System dependencies
+Install node-red
 
-- Add System dependencies
-
-### Gather environment variables
-
-You'll need the following values from the Nylas Dashboard:
-
-```text
-ACCESS_TOKEN = ""
-CLIENT_ID = ""
-CLIENT_SECRET = ""
-```
-
-Add the above values to a `.env` file.
-
-The `.env` file is added to `.gitignore`. Ensure to store these values securely.
-
-### Install dependencies
-
-[replace with install steps]
 ```bash
-$ npm i
+$ sudo npm install -g --unsafe-perm node-red
 ```
 
-## Usage
+Run it
 
-The recommended way to use this sample is ...
+```bash
+$ node-red
+```
 
-You can also clone the repository ...
+Open the editor on your favourite web browser
 
-You'll find more detailed instructions ...
+```bash
+http://127.0.0.1:1880/
+```
 
-## Get support
+Import Send_Email.json or Read_Emails.json
 
-If you found a bug or want to suggest a new [feature/use case/sample], please file an issue.
+Get all the information on the blog post:
 
-## Learn more
-
-Visit our [Nylas documentation](https://developer.nylas.com/) to learn more.
+[Send and Read Emails Using Node-Red and the Nylas APIs](https://www.nylas.com/blog/send-and-read-emails-using-node-red-dev/)
