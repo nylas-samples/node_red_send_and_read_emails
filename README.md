@@ -34,6 +34,8 @@ or
 Read_Emails.json
 ```
 
+**Replace <GRANT_ID> with your own information.**
+
 Get all the information on the blog post:
 
 [Send and Read Emails Using Node-Red and the Nylas APIs](https://www.nylas.com/blog/send-and-read-emails-using-node-red-dev/)
