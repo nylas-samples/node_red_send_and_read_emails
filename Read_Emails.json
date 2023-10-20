@@ -1,1 +1,237 @@
-[{"id":"87e2a1727ab6f3e2","type":"http in","z":"296ddd4a04e1cfa0","name":"Get Emails","url":"GetEmails/:limit","method":"get","upload":false,"swaggerDoc":"","x":100,"y":140,"wires":[["7f4e562ecac458b7"]]},{"id":"e64e6364cca98950","type":"template","z":"296ddd4a04e1cfa0","name":"","field":"payload","fieldType":"msg","format":"handlebars","syntax":"mustache","template":"<html>\n    <head>\n        <script src=\"https://cdn.tailwindcss.com\"></script>\n    </head>\n<body> \n<h1 class=\"font-black\" style=\"text-align:center\">Inbox</h2>\n<table class=\"table-auto\">\n    <tr>\n        <th>Subject</th>\n        <th>From (Name)</th>\n        <th>From (Email)</th>\n        <th>Date</th>\n        <th>Snippet</th>\n    </tr>\n    {{#payload}}\n    <tr>\n    <td>\n\t{{subject}}\n    </td>\n    <td>\n    {{from.0.name}}\n    </td>\n    <td>\n    {{from.0.email}}\n    </td>    \n    <td>\n\t{{date}}\n    </td>    \n    <td>\n    {{snippet}}\n    </td>\n    </tr>\n    {{/payload}}\n</table>  \n</body>\n</html>","output":"str","x":1000,"y":180,"wires":[["0c838f309c48d85d"]]},{"id":"0c838f309c48d85d","type":"http response","z":"296ddd4a04e1cfa0","name":"","statusCode":"","headers":{},"x":1130,"y":100,"wires":[]},{"id":"a8d5a1cebb55f6b5","type":"http request","z":"296ddd4a04e1cfa0","name":"","method":"GET","ret":"obj","paytoqs":"ignore","url":"https://api.nylas.com/messages?in=inbox&limit={{{payload}}}","tls":"","persist":false,"proxy":"","authType":"bearer","senderr":false,"headers":[{"keyType":"other","keyValue":"Accept","valueType":"other","valueValue":"application/json"},{"keyType":"other","keyValue":"Content-Type","valueType":"other","valueValue":"application/json"}],"x":430,"y":300,"wires":[["70fd9aeb8ffcbc7e"]]},{"id":"b90f188c45e4024a","type":"join","z":"296ddd4a04e1cfa0","name":"","mode":"auto","build":"object","property":"payload","propertyType":"msg","key":"topic","joiner":"\\n","joinerType":"str","accumulate":"false","timeout":"","count":"","reduceRight":false,"x":890,"y":260,"wires":[["e64e6364cca98950"]]},{"id":"898ade893257abd2","type":"function","z":"296ddd4a04e1cfa0","name":"Change Date Format","func":"msg.payload.date = new Date(msg.payload.date * 1000).toLocaleString();\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":680,"y":280,"wires":[["b90f188c45e4024a"]]},{"id":"7f4e562ecac458b7","type":"change","z":"296ddd4a04e1cfa0","name":"","rules":[{"t":"set","p":"payload","pt":"msg","to":"req.params.limit","tot":"msg"}],"action":"","property":"","from":"","to":"","reg":false,"x":220,"y":240,"wires":[["41d571a2b2baf019"]]},{"id":"41d571a2b2baf019","type":"function","z":"296ddd4a04e1cfa0","name":"To Number","func":"if (msg.payload == null){\n    msg.payload = \"5\";\n} \nmsg.payload = Number(msg.payload);\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":410,"y":140,"wires":[["a8d5a1cebb55f6b5"]]},{"id":"70fd9aeb8ffcbc7e","type":"split","z":"296ddd4a04e1cfa0","name":"","splt":"\\n","spltType":"str","arraySplt":1,"arraySpltType":"len","stream":false,"addname":"","x":590,"y":200,"wires":[["898ade893257abd2"]]},{"id":"74f505265e56515c","type":"http in","z":"296ddd4a04e1cfa0","name":"Get Emails no Params","url":"GetEmails","method":"get","upload":false,"swaggerDoc":"","x":120,"y":320,"wires":[["7f4e562ecac458b7"]]}]
+[
+    {
+        "id": "8025b56b878046c6",
+        "type": "tab",
+        "label": "Read Emails",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5d81a35bc7be4422",
+        "type": "http in",
+        "z": "8025b56b878046c6",
+        "name": "Get Emails",
+        "url": "GetEmails/:limit",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 120,
+        "y": 160,
+        "wires": [
+            [
+                "7a8be0133eb64b1a"
+            ]
+        ]
+    },
+    {
+        "id": "3976aac7e62ce3ab",
+        "type": "template",
+        "z": "8025b56b878046c6",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<html>\n    <head>\n        <script src=\"https://cdn.tailwindcss.com\"></script>\n    </head>\n<body> \n<h1 class=\"font-black\" style=\"text-align:center\">Inbox</h2>\n<table class=\"table-auto\">\n    <tr>\n        <th>Subjects</th>\n        <th>From (Name)</th>\n        <th>From (Email)</th>\n        <th>Date</th>\n        <th>Snippet</th>\n    </tr>\n    {{#payload}}\n    <tr>\n    <td>\n\t{{subject}}\n    </td>\n    <td>\n    {{from.0.name}}\n    </td>\n    <td>\n    {{from.0.email}}\n    </td>    \n    <td>\n\t{{date}}\n    </td>    \n    <td>\n    {{snippet}}\n    </td>\n    </tr>\n    {{/payload}}\n</table>  \n</body>\n</html>",
+        "output": "str",
+        "x": 1020,
+        "y": 200,
+        "wires": [
+            [
+                "a157a28a9b9738dc"
+            ]
+        ]
+    },
+    {
+        "id": "a157a28a9b9738dc",
+        "type": "http response",
+        "z": "8025b56b878046c6",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1150,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "c6ed2b31be5fb273",
+        "type": "http request",
+        "z": "8025b56b878046c6",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.us.nylas.com/v3/grants/<GRANT_ID>/messages?limit={{{payload}}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "bearer",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "Accept",
+                "valueType": "other",
+                "valueValue": "application/json"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "Content-Type",
+                "valueType": "other",
+                "valueValue": "application/json"
+            }
+        ],
+        "x": 450,
+        "y": 320,
+        "wires": [
+            [
+                "9a56af58844dcc52"
+            ]
+        ]
+    },
+    {
+        "id": "9a180d5c7f46fdd5",
+        "type": "join",
+        "z": "8025b56b878046c6",
+        "name": "",
+        "mode": "auto",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": "false",
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "x": 910,
+        "y": 280,
+        "wires": [
+            [
+                "3976aac7e62ce3ab"
+            ]
+        ]
+    },
+    {
+        "id": "2b3456d48932bb88",
+        "type": "function",
+        "z": "8025b56b878046c6",
+        "name": "Change Date Format",
+        "func": "msg.payload.date = new Date(msg.payload.date * 1000).toLocaleString();\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 340,
+        "wires": [
+            [
+                "9a180d5c7f46fdd5"
+            ]
+        ]
+    },
+    {
+        "id": "7a8be0133eb64b1a",
+        "type": "change",
+        "z": "8025b56b878046c6",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "req.params.limit",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 240,
+        "y": 260,
+        "wires": [
+            [
+                "af10ea77b29e8697"
+            ]
+        ]
+    },
+    {
+        "id": "af10ea77b29e8697",
+        "type": "function",
+        "z": "8025b56b878046c6",
+        "name": "To Number",
+        "func": "if (msg.payload == null){\n    msg.payload = \"5\";\n} \nmsg.payload = Number(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 160,
+        "wires": [
+            [
+                "c6ed2b31be5fb273"
+            ]
+        ]
+    },
+    {
+        "id": "50bc7e1d236712e4",
+        "type": "split",
+        "z": "8025b56b878046c6",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 730,
+        "y": 140,
+        "wires": [
+            [
+                "2b3456d48932bb88"
+            ]
+        ]
+    },
+    {
+        "id": "5312732a1ba01641",
+        "type": "http in",
+        "z": "8025b56b878046c6",
+        "name": "Get Emails no Params",
+        "url": "GetEmails",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 340,
+        "wires": [
+            [
+                "7a8be0133eb64b1a"
+            ]
+        ]
+    },
+    {
+        "id": "9a56af58844dcc52",
+        "type": "function",
+        "z": "8025b56b878046c6",
+        "name": "Extract {Data}",
+        "func": "msg.payload = msg.payload.data;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 240,
+        "wires": [
+            [
+                "50bc7e1d236712e4"
+            ]
+        ]
+    }
+]
